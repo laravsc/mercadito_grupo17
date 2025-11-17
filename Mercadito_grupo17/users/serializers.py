@@ -16,7 +16,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs.get("password") != attrs.get("password2"):
             raise serializers.ValidationError({"password": "Las contraseñas no coinciden."})
-        # valida fuerza de contraseña usando validators de Django
         validate_password(attrs.get("password"))
         return attrs
 

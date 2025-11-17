@@ -1,18 +1,17 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserRegisterSerializer
+from rest_framework.permissions import AllowAny
 
 class RegisterView(APIView):
-    permission_classes = []  # permitir anónimos
+    permission_classes = [AllowAny]
     authentication_classes = []
 
     def post(self, request, *args, **kwargs):
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            # no devolvemos password
             data = {
                 "id": user.id,
                 "username": user.username,
